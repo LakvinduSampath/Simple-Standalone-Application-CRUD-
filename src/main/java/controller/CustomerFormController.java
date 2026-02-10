@@ -243,52 +243,30 @@ public class CustomerFormController implements Initializable {
     }
 
     public void btnUpdateOnAction(ActionEvent actionEvent) {
-
-        btnSearchOnAction(actionEvent);
-        txtId.setEditable(false);
-
-        String id=txtId.getText();
-        String name=txtName.getText();
-        String title=cmbTitle.getValue().toString();
-        LocalDate dob = dateDob.getValue();
-        String address=txtAddress.getText();
-        Double salary=Double.parseDouble(txtSalary.getText());
-        String city=txtCity.getText();
-        String province=txtProvince.getText();
-        String postalCode=txtPostalCode.getText();
-
-        Customer customer = new Customer(id, title, name, dob, address, salary, city, province, postalCode);
-
         try {
             Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO customer VALUES(?,?,?,?,?,?,?,?,?)");
-            preparedStatement.setString(1, customer.getId());
-            preparedStatement.setString(2, customer.getTitle());
-            preparedStatement.setString(3, customer.getName());
-            preparedStatement.setObject(4, customer.getDob());
-            preparedStatement.setDouble(5, customer.getSalary());
-            preparedStatement.setString(6, customer.getAddrss());
-            preparedStatement.setString(7, customer.getCity());
-            preparedStatement.setString(8, customer.getProvince());
-            preparedStatement.setString(9, customer.getPostalCode());
 
-            if (preparedStatement.executeUpdate()>0){
-                new Alert(Alert.AlertType.INFORMATION,"Updated").show();
-                txtId.setText("");
-                cmbTitle.setValue(null);
-                txtName.setText("");
-                txtAddress.setText("");
-                txtCity.setText("");
-                txtProvince.setText("");
-                txtPostalCode.setText("");
-                dateDob.setValue(null);
-                dateDob.setValue(null);
-                txtSalary.setText("");
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "UPDATE customer SET title=?, name=?, dob=?, salary=?, address=?, city=?, province=?, postalcode=? WHERE id=?"
+            );
+
+            preparedStatement.setString(1, cmbTitle.getValue().toString());
+            preparedStatement.setString(2, txtName.getText());
+            preparedStatement.setObject(3, dateDob.getValue()); // Better than toString()
+            preparedStatement.setDouble(4, Double.parseDouble(txtSalary.getText()));
+            preparedStatement.setString(5, txtAddress.getText());
+            preparedStatement.setString(6, txtCity.getText());
+            preparedStatement.setString(7, txtProvince.getText());
+            preparedStatement.setString(8, txtPostalCode.getText());
+            preparedStatement.setString(9, txtId.getText()); // WHERE condition
+
+            if (preparedStatement.executeUpdate() > 0) {
+                new Alert(Alert.AlertType.INFORMATION, "Customer Updated").show();
                 loadTable();
-
-            }else{
-                new Alert(Alert.AlertType.ERROR,"not updated").show();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Update Failed").show();
             }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
