@@ -14,7 +14,7 @@
 
 <AnchorPane prefHeight="549.0" prefWidth="764.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerFormController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#58dc00" height="54.0" stroke="BLACK" strokeType="INSIDE" width="764.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1dbec4" height="54.0" stroke="BLACK" strokeType="INSIDE" width="764.0" />
       <Label layoutX="259.0" layoutY="4.0" text="Customer Details">
          <font>
             <Font name="System Bold" size="30.0" />
@@ -24,7 +24,7 @@
       <JFXComboBox fx:id="cmbTitle" accessibleHelp="MRS" accessibleText="MR" layoutX="222.0" layoutY="81.0" prefHeight="26.0" prefWidth="145.0" promptText="title" />
       <JFXTextField fx:id="txtName" layoutX="445.0" layoutY="81.0" promptText="customer name" />
       <DatePicker fx:id="dateDob" layoutX="601.0" layoutY="83.0" prefHeight="26.0" prefWidth="135.0" promptText="Date of Birth" />
-      <JFXTextArea fx:id="txtAddress" layoutX="14.0" layoutY="135.0" prefHeight="90.0" prefWidth="156.0" promptText="address" />
+      <JFXTextArea fx:id="txtAddress" layoutX="14.0" layoutY="135.0" prefHeight="90.0" prefWidth="146.0" promptText="address" />
       <JFXTextField fx:id="txtSalary" layoutX="214.0" layoutY="206.0" promptText="salary" />
       <JFXTextField fx:id="txtCity" layoutX="390.0" layoutY="206.0" promptText="city" />
       <JFXTextField fx:id="txtProvince" layoutX="580.0" layoutY="206.0" promptText="province" />
