@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="450.0" prefWidth="646.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashboardController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a0b5c7" height="550.0" stroke="BLACK" strokeType="INSIDE" width="188.0" />
+      <JFXButton layoutX="21.0" layoutY="173.0" onAction="#btnCustomerFormOnAction" prefHeight="33.0" prefWidth="143.0" style="-fx-background-color: #1B1464;" text="Customer" textFill="#f2f2f2">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="21.0" layoutY="236.0" onAction="#btnItemFormOnAction" prefHeight="33.0" prefWidth="143.0" style="-fx-background-color: #1B1464;" text="Item" textFill="#f2f2f2">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="21.0" layoutY="298.0" prefHeight="33.0" prefWidth="143.0" style="-fx-background-color: #1B1464;" text="Order" textFill="#f2f2f2">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </JFXButton>
+      <ImageView fitHeight="127.0" fitWidth="135.0" layoutX="29.0" layoutY="14.0" opacity="0.67" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/logo.jpg" />
+         </image>
+         <effect>
+            <Glow level="0.6" />
+         </effect>
+      </ImageView>
+      <AnchorPane fx:id="dashRoot" layoutX="188.0" prefHeight="549.0" prefWidth="764.0" />
+   </children>
+</AnchorPane>
