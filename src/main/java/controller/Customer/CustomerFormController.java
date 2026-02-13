@@ -1,11 +1,10 @@
-package controller;
+package controller.Customer;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import db.DBConnection;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -94,39 +93,24 @@ public class CustomerFormController implements Initializable {
         String postalCode=txtPostalCode.getText();
 
         Customer customer = new Customer(id, title, name, dob, address, salary, city, province, postalCode);
+        CustomerServiceImplementation customerService = new CustomerServiceImplementation();
+        boolean ans = customerService.addCustomer(customer);
 
-        try {
-            Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO customer VALUES(?,?,?,?,?,?,?,?,?)");
-            preparedStatement.setString(1, customer.getId());
-            preparedStatement.setString(2, customer.getTitle());
-            preparedStatement.setString(3, customer.getName());
-            preparedStatement.setObject(4, customer.getDob());
-            preparedStatement.setDouble(5, customer.getSalary());
-            preparedStatement.setString(6, customer.getAddrss());
-            preparedStatement.setString(7, customer.getCity());
-            preparedStatement.setString(8, customer.getProvince());
-            preparedStatement.setString(9, customer.getPostalCode());
-
-            if (preparedStatement.executeUpdate()>0){
-                new Alert(Alert.AlertType.INFORMATION,"Customer added").show();
-                txtId.setText("");
-                cmbTitle.setValue(null);
-                txtName.setText("");
-                txtAddress.setText("");
-                txtCity.setText("");
-                txtProvince.setText("");
-                txtPostalCode.setText("");
-                dateDob.setValue(null);
-                dateDob.setValue(null);
-                txtSalary.setText("");
-                loadTable();
-
-            }else{
-                new Alert(Alert.AlertType.ERROR,"customer not added").show();
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if(ans){
+            new Alert(Alert.AlertType.INFORMATION,"Customer added").show();
+            txtId.setText("");
+            cmbTitle.setValue(null);
+            txtName.setText("");
+            txtAddress.setText("");
+            txtCity.setText("");
+            txtProvince.setText("");
+            txtPostalCode.setText("");
+            dateDob.setValue(null);
+            dateDob.setValue(null);
+            txtSalary.setText("");
+            loadTable();
+        }else{
+            new Alert(Alert.AlertType.ERROR,"customer not added").show();
         }
 
     }

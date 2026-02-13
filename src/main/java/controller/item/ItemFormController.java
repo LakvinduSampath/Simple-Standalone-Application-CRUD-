@@ -1,13 +1,10 @@
-package controller;
+package controller.item;
 
 import com.jfoenix.controls.JFXTextField;
-import com.mysql.cj.xdevapi.FindStatementImpl;
 import db.DBConnection;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -21,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ItemFormController implements Initializable {
@@ -85,45 +83,42 @@ public class ItemFormController implements Initializable {
 
     private void loadTable(){
 
+        ItemServiceImplementation itm = new ItemServiceImplementation();
+        List<ItemModal> all = itm.getAll();
+
         ArrayList<itemTableModal> itemList = new ArrayList<>();
-        colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
-        colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
-        colPackSize.setCellValueFactory(new PropertyValueFactory<>("packSize"));
-        colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
-        colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
-        try {
-            Connection connection = DBConnection.getInstance().getConnection();
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM items");
-            while(resultSet.next()){
+        all.forEach(item ->{
+            itemList.add(
+                    new itemTableModal(
+                            item.getCode(),
+                            item.getDescription(),
+                            item.getPackSize(),
+                            item.getUnitPrice(),
+                            item.getQty()
+                    )
+            );
 
-                itemList.add(
-                        new itemTableModal(
-                                resultSet.getString(1),
-                                resultSet.getString(2),
-                                resultSet.getString(3),
-                                resultSet.getDouble(4),
-                                resultSet.getDouble(5)
-                        )
-                );
+        } );
 
-            }
+        tblItems.setItems(FXCollections.observableArrayList(all));
 
-            tblItems.setItems(FXCollections.observableArrayList(itemList));
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadTable();
+        colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
+        colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        colPackSize.setCellValueFactory(new PropertyValueFactory<>("packSize"));
+        colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
+        colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
         tblItems.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) ->{
             assert newValue !=null;
             setTextValues((itemTableModal) newValue);
 
         } );
+
+
     }
 
     private void setTextValues(itemTableModal itm){
